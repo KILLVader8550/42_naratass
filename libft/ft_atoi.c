@@ -1,4 +1,4 @@
-int	ft_atoi(const char *nptr)
+int		ft_atoi(const char *nptr)
 {
 	int	sum;
 	int	sign;
