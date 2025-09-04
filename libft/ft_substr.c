@@ -2,20 +2,21 @@
 
 char    *ft_substr(char const *s, size_t start, size_t len)
 {
-    char    *str;
-    size_t  i;
+    char    *sub_str;
+    size_t  str_size;
 
-    if (!s)
-        return (NULL);
-    str = malloc((sizeof(char)) * (len + 1));
-    if (!str)
-        return (NULL);
-    i = 0;
-    while (i < len && s[i])
+    str_size = ft_strlen(s);
+    if (str_size < start)   
     {
-        str[i] = s[i];
-        ++i;
+        sub_str = (char *) malloc(sizeof(char) * 1);
+        sub_str[0] = '\0';
     }
-    str[i] = '\0';
-    return (str);
+    if (len > str_size - start)
+        len = str_size - start;
+    sub_str = (char *) malloc(sizeof(char) * (len + 1));
+    if (!sub_str)
+        return (NULL);
+    ft_memcpy(sub_str, s + start, len);
+    sub_str[len] = '\0';
+    return (sub_str);
 }

@@ -3,6 +3,6 @@
 
 int main(void)
 {
-    printf("Number: %s", ft_itoa(-42));
+    printf("Sub string: %s", ft_substr("Why not", 2, 3));
     return (0);
 }
