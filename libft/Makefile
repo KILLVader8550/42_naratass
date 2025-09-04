@@ -18,6 +18,7 @@ BONUS_PART = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstadd_back.c \
 # Source and Object file
 SRCS = ${PART1} ${PART2}
 OBJS = ${SRCS:.c=.o}
+BONUS_OBJS = ${BONUS_PART:.c=.o}
  
 # Compiler and flag
 CC = gcc
@@ -44,8 +45,11 @@ main.o: main.c
 
 all: ${NAME} ${MAIN}
 
+bonus:	${OBJS} ${BONUS_OBJS}
+	ar rcs ${NAME} ${OBJS} ${BONUS_OBJS}
+
 clean:
-	${RM} ${OBJS} main.o
+	${RM} ${OBJS} ${BONUS_OBJS} main.o
 
 fclean: clean
 	${RM} ${NAME} ${MAIN}
