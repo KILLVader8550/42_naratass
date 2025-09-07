@@ -1,5 +1,4 @@
 NAME = libft.a
-MAIN = main
 
 # file name
 PART1 = ft_tolower.c ft_toupper.c ft_isprint.c ft_isascii.c ft_isalnum.c \
@@ -35,25 +34,17 @@ RM = rm -f
 ${NAME}: ${OBJS}
 	ar rcs ${NAME} ${OBJS}
 
-# Build main by using main.c and the library
-${MAIN}: main.o ${NAME}
-	${CC} ${FLAGS} -o ${MAIN} main.o -L. -lft
-
-# Compile main file
-main.o: main.c
-	${CC} ${FLAGS} ${INCLUDE} -c main.c -o main.o
-
-all: ${NAME} ${MAIN}
+all: ${NAME}
 
 bonus:	${OBJS} ${BONUS_OBJS}
 	ar rcs ${NAME} ${OBJS} ${BONUS_OBJS}
 
 clean:
-	${RM} ${OBJS} ${BONUS_OBJS} main.o
+	${RM} ${OBJS} ${BONUS_OBJS}
 
 fclean: clean
-	${RM} ${NAME} ${MAIN}
+	${RM} ${NAME}
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean rel
