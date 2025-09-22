@@ -6,19 +6,24 @@
 
 char	*get_next_line(int fd)
 {
+	static char	*stash;
 	char		*str;
-	char		*stash;
-	int			j;
+	static int	j;
 	int			bytes_read;
 	int			ptr;
 
-	ptr = 0;
 	str = (char *) malloc((sizeof(char) * 100));
 	if (!str)
 		return (NULL);
+	ptr = 0;
+	while (str[j] != '\0')
+	{
+		str[ptr++] = stash[j++];
+	}
 	stash = (char *) malloc((sizeof(char) * (BUFFER_SIZE + 1)));
 	if (!stash)
 		return (NULL);
+	ptr = 0;
 	while ((bytes_read = read(fd, stash, BUFFER_SIZE)) > 0)
 	{
 		stash[bytes_read] = '\0';
@@ -41,13 +46,16 @@ char	*get_next_line(int fd)
 	return (str);
 }
 
-int main() 
+int main()
 {
 	int fd = open("text.txt", O_RDONLY);
 	char	*str;
 
 	str = get_next_line(fd);
-	printf("%s\n", str);
+	printf("first line: %s\n", str);
+	str = get_next_line(fd);
+	printf("second line: %s\n", str);
+
 	free(str);
 	close(fd);
 }
