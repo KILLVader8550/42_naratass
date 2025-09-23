@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include <stdlib.h>
-#define BUFFER_SIZE 10
+#include <fcntl.h>
+#define BUFFER_SIZE 3
 
 char	*get_next_line(int fd)
 {
 	static char	*stash;
-	char		*str;
 	static int	j;
+	char		*str;
 	int			bytes_read;
 	int			ptr;
 
@@ -16,14 +16,16 @@ char	*get_next_line(int fd)
 	if (!str)
 		return (NULL);
 	ptr = 0;
-	while (str[j] != '\0')
+	if (stash)
 	{
-		str[ptr++] = stash[j++];
+		while (stash[j])
+		{
+			str[ptr++] = stash[j++];
+		}
 	}
 	stash = (char *) malloc((sizeof(char) * (BUFFER_SIZE + 1)));
 	if (!stash)
 		return (NULL);
-	ptr = 0;
 	while ((bytes_read = read(fd, stash, BUFFER_SIZE)) > 0)
 	{
 		stash[bytes_read] = '\0';
@@ -32,16 +34,13 @@ char	*get_next_line(int fd)
 		{
 			if (stash[j] == '\n')
 			{
-				free(stash);
-				stash = NULL;
 				str[ptr] = '\0';
+				j++;
 				return (str);
 			}
 			str[ptr++] = stash[j++];
 		}
 	}
-	free(stash);
-	stash = NULL;
 	str[ptr] = '\0';
 	return (str);
 }
@@ -55,7 +54,7 @@ int main()
 	printf("first line: %s\n", str);
 	str = get_next_line(fd);
 	printf("second line: %s\n", str);
-
 	free(str);
 	close(fd);
+	return (0);
 }
