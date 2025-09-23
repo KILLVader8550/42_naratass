@@ -1,2 +1,2 @@
-one
-two
+Hello my name is Fuku.
+This is test for get_next_line.
