@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
+#include "get_next_line.h"
 #define BUFFER_SIZE 3
 
 void	putstr(int *fd, char *str, char *stash, int *ptr, int *j)
@@ -55,19 +52,4 @@ char	*get_next_line(int fd)
 	}
 	putstr(&fd, str, stash, &ptr, &j);
 	return (str);
-}
-
-int main()
-{
-	int fd = open("text.txt", O_RDONLY);
-	// int fd = 1;
-	char	*str;
-
-	str = get_next_line(fd);
-	printf("first line: %s\n", str);
-	str = get_next_line(fd);
-	printf("second line: %s\n", str);
-	free(str);
-	close(fd);
-	return (0);
 }
