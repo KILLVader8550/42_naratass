@@ -1,55 +1,68 @@
 #include "get_next_line.h"
-#define BUFFER_SIZE 3
-
-void	putstr(int *fd, char *str, char *stash, int *ptr, int *j)
-{
-	int	bytes_read;
-
-	while ((bytes_read = read(*fd, stash, BUFFER_SIZE)) > 0)
-	{
-		stash[bytes_read] = '\0';
-		*j = 0;
-		while (stash[*j] != '\0')
-		{
-			if (stash[*j] == '\n')
-			{
-				str[(*ptr)] = '\0';
-				(*j)++;
-				return ;
-			}
-			str[(*ptr)++] = stash[(*j)++];
-		}
-		str[(*ptr)] = '\0';
-	}
-}
-
-void	get_previous_stash(char *str, char *stash, int *ptr, int *j)
-{
-	if (stash && str)
-	{
-		while (stash[*j])
-			str[(*ptr)++] = stash[(*j)++];
-	}
-}
 
 char	*get_next_line(int fd)
 {
 	static char	*stash;
-	static int	j;
-	char		*str;
-	int			ptr;
+	char		*line;
 
-	str = (char *) malloc((sizeof(char) * 100));
-	if (!str)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	ptr = 0;
-	get_previous_stash(str, stash, &ptr, &j);
+	stash = get_stash(fd, stash);
 	if (!stash)
+		return (NULL);
+	line = extract_line(stash);
+	stash = update_stash(stash);
+	return (line);
+}
+
+char	*extract_line(char *stash)
+{
+	char	*line;
+	size_t	size;
+
+	size = get_stash_size(stash);
+	line = (char *) malloc(sizeof(char) * (size + 1));
+	if (!line)
+		return (NULL);
+	ft_memcpy(line, stash, size);
+	line[size] = '\0';
+	return (line);
+}
+
+char	*update_stash(char *stash)
+{
+	size_t offset = get_stash_size(stash);
+	if (!stash[offset])
 	{
-		stash = (char *) malloc((sizeof(char) * (BUFFER_SIZE + 1)));
-		if (!stash)
-			return (NULL);
+		free(stash);
+		return (NULL);
 	}
-	putstr(&fd, str, stash, &ptr, &j);
-	return (str);
+	char *new_stash = ft_strdup(stash + offset);
+	free(stash);
+	return (new_stash);
+}
+
+char	*get_stash(int fd, char *stash)
+{
+	char	*buf;
+	int		bytes;
+
+	buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buf)
+		return (NULL);
+	while (!find_newline(stash))
+	{
+		bytes = read(fd, buf, BUFFER_SIZE);
+		if (bytes <= 0)
+			break ;
+		buf[bytes] = '\0';
+		stash = ft_strjoin(stash, buf);
+		if (!stash)
+		{
+			free(buf);
+			return (NULL);
+		}
+	}
+	free(buf);
+	return (stash);
 }

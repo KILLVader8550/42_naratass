@@ -1,8 +1,8 @@
 NAME = libget_next_line.a
 MAIN = main
 
-SRC = get_next_line.c
-OBJS = ${SRC:.c=.o}
+SRCS = get_next_line.c get_next_line_utils.c
+OBJS = ${SRCS:.c=.o}
 
 # Compile and flags
 CC = gcc

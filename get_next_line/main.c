@@ -8,9 +8,13 @@ int main()
 	char	*str;
 
 	str = get_next_line(fd);
-	printf("first line: %s\n", str);
+	printf("line 1: %s", str);
+	free(str);
 	str = get_next_line(fd);
-	printf("second line: %s\n", str);
+	printf("line 2: %s", str);
+	free(str);
+	str = get_next_line(fd);
+	printf("line 3: %s", str);
 	free(str);
 	close(fd);
 	return (0);
