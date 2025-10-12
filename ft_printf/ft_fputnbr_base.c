@@ -6,21 +6,22 @@
 /*   By: naratass <naratass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 12:45:45 by naratass          #+#    #+#             */
-/*   Updated: 2025/09/09 13:03:31 by naratass         ###   ########.fr       */
+/*   Updated: 2025/10/13 00:10:19 by naratass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 static void	ft_fprint_nbrbase(char *buf, int cnt, const char format);
 
 int	ft_fputnbr_base(long n, int base, const char format)
 {
-	int		cnt;
-	char	buf[1024];
+	int			cnt;
+	char		buf[1024];
+	const char	*up_hex = "0123456789abcdef";
+	const char	*low_hex = "0123456789ABCDEF";
 
 	cnt = 0;
-	char *hex = "0123456789abcdef";
 	if (n < 0)
 	{
 		{
@@ -31,12 +32,17 @@ int	ft_fputnbr_base(long n, int base, const char format)
 	}
 	while (n > 0)
 	{
-		buf[cnt] = hex[n % base];
+		if (format == 'x')
+			buf[cnt] = low_hex[n % base];
+		else
+			buf[cnt] = up_hex[n % base];
 		n /= base;
 		cnt++;
 	}
-	ft_fprint_nbrbase(buf, cnt, format);
-	return (cnt);
+	buf[cnt] = '\0';
+	return (ft_fputstr(buf));
+	// ft_fprint_nbrbase(buf, cnt, format);
+	// return (cnt);
 }
 
 static void	ft_fprint_nbrbase(char *buf, int cnt, const char format)

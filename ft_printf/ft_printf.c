@@ -6,11 +6,11 @@
 /*   By: naratass <naratass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 11:12:19 by naratass          #+#    #+#             */
-/*   Updated: 2025/09/09 13:18:31 by naratass         ###   ########.fr       */
+/*   Updated: 2025/10/12 23:38:58 by naratass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 int	check_format(va_list ap, const char format);
 
@@ -20,6 +20,8 @@ int ft_printf(const char *format, ...)
 	int		cnt;
 	va_list	ap;
 
+	if (!format)
+		return (-1);
 	i = 0;
 	cnt = 0;
 	va_start(ap, format);
@@ -51,12 +53,12 @@ int	check_format(va_list ap, const char format)
 	if (format == 'c')
 		return (ft_fputchar(va_arg(ap, int)));
 	if (format == 'p')
-		return (ft_fputaddr(va_arg(ap, unsigned long)));
+		return (ft_fputaddr(va_arg(ap, void *)));
 	if (format == '%')
 		return (ft_fputchar('%'));
 	if (format == 'u')
 		return (ft_funsignednbr(va_arg(ap, int)));
-	return (0);
+	return (ft_fputchar(va_arg(ap, int)));
 }
 // int ft_printf(const char *str, ...)
 // {
@@ -83,3 +85,4 @@ int	check_format(va_list ap, const char format)
 // 	}
 // 	va_end(args); 
 // }
+

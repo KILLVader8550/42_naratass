@@ -1,10 +1,13 @@
-#include "libftprintf.h"
+#include "ft_printf.h"
+# include <stdio.h>
+# define LONG_MIN -2147483648
+# define LONG_MAX 2147483647
 
 int	main()
 {
-	int original_len, our_len;
-	our_len = ft_printf("Hello World!\n%s\n%x\n%c\n%p\n%d\n%u\n", "Love!", 42, 't', &original_len, -42, -1);
-	original_len = printf("Hello World!\n%s\n%x\n%c\n%p\n%d\n%u\n", "Love!", 42, 't', &original_len, -42, -1);
+	int our_len, original_len;
+	our_len = ft_printf(" %c %c %c \n", '0', 0, '1');
+	original_len = printf(" %c %c %c \n", '0', 0, '1');
 	printf("Our len: %d\n", our_len);
 	printf("Original len: %d\n", original_len);
 }

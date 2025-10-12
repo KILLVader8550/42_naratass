@@ -6,11 +6,11 @@
 /*   By: naratass <naratass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 12:44:02 by naratass          #+#    #+#             */
-/*   Updated: 2025/09/09 12:46:45 by naratass         ###   ########.fr       */
+/*   Updated: 2025/10/12 12:21:00 by naratass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 int	ft_fputchar(int c)
 {

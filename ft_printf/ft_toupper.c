@@ -6,9 +6,11 @@
 /*   By: naratass <naratass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 11:12:13 by naratass          #+#    #+#             */
-/*   Updated: 2025/09/09 11:12:24 by naratass         ###   ########.fr       */
+/*   Updated: 2025/10/12 12:22:09 by naratass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
 
 int	ft_toupper(int c)
 {
