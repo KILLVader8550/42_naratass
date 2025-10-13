@@ -6,7 +6,7 @@
 /*   By: naratass <naratass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 12:45:45 by naratass          #+#    #+#             */
-/*   Updated: 2025/10/13 00:10:19 by naratass         ###   ########.fr       */
+/*   Updated: 2025/10/13 00:16:47 by naratass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	ft_fputnbr_base(long n, int base, const char format)
 {
 	int			cnt;
 	char		buf[1024];
-	const char	*up_hex = "0123456789abcdef";
-	const char	*low_hex = "0123456789ABCDEF";
+	const char	*hex = "0123456789abcdef";
 
 	cnt = 0;
 	if (n < 0)
@@ -32,17 +31,12 @@ int	ft_fputnbr_base(long n, int base, const char format)
 	}
 	while (n > 0)
 	{
-		if (format == 'x')
-			buf[cnt] = low_hex[n % base];
-		else
-			buf[cnt] = up_hex[n % base];
+		buf[cnt] = hex[n % base];
 		n /= base;
 		cnt++;
 	}
-	buf[cnt] = '\0';
-	return (ft_fputstr(buf));
-	// ft_fprint_nbrbase(buf, cnt, format);
-	// return (cnt);
+	ft_fprint_nbrbase(buf, cnt, format);
+	return (cnt);
 }
 
 static void	ft_fprint_nbrbase(char *buf, int cnt, const char format)

@@ -6,7 +6,7 @@
 /*   By: naratass <naratass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 11:12:19 by naratass          #+#    #+#             */
-/*   Updated: 2025/10/12 23:38:58 by naratass         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:15:36 by naratass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,29 +60,3 @@ int	check_format(va_list ap, const char format)
 		return (ft_funsignednbr(va_arg(ap, int)));
 	return (ft_fputchar(va_arg(ap, int)));
 }
-// int ft_printf(const char *str, ...)
-// {
-// 	va_list args;
-// 	int		count;
-	
-// 	va_start(args, str);
-// 	while (!str) -> (str != NULL)
-// 	{
-// 		if (*str != '%' || *str != '/')
-// 		{
-// 			ft_putchar_fd(*str, 1);
-// 			str++;
-// 		}
-// 		else
-// 		{
-// 			if (*str == '%')
-// 			{
-// 				str++;
-// 				ft_printstr(*str, va_arg(args, int));
-// 			}
-// 		}
-// 		count++;
-// 	}
-// 	va_end(args); 
-// }
-
