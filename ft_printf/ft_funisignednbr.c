@@ -17,5 +17,5 @@ int ft_funsignednbr(int n)
 	unsigned int	u;
 
 	u = (unsigned int)n;
-	return (ft_fputnbr_base(u, 10, 'u'));
+	return (ft_fputnbr_deci(u));
 }

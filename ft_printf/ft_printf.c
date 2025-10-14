@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
-int	check_format(va_list ap, const char format);
+static int	check_format(va_list*ap, const char format);
 
 int ft_printf(const char *format, ...)
 {
@@ -30,7 +31,7 @@ int ft_printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			i++;
-			cnt += check_format(ap, format[i]);
+			cnt += check_format(&ap, format[i]);
 		}
 		else
 			cnt += write(1, &format[i], 1);
@@ -40,23 +41,23 @@ int ft_printf(const char *format, ...)
 	return (cnt);
 }
 
-int	check_format(va_list ap, const char format)
+static int	check_format(va_list *ap, const char format)
 {
 	if (format == 's')
-		return (ft_fputstr(va_arg(ap, char *)));
+		return (ft_fputstr(va_arg(*ap, char *)));
 	if (format == 'd' || format == 'i')
-		return (ft_fputnbr_base(va_arg(ap, int), 10, 'd'));
+		return (ft_fputnbr_deci(va_arg(*ap, int)));
 	if (format == 'x')
-		return (ft_fputnbr_base(va_arg(ap, int), 16, 'x'));
+		return (ft_fputnbr_hex(va_arg(*ap, uintptr_t), 'x'));
 	if (format == 'X')
-		return (ft_fputnbr_base(va_arg(ap, int), 16, 'X'));
+		return (ft_fputnbr_hex(va_arg(*ap, uintptr_t), 'X'));
 	if (format == 'c')
-		return (ft_fputchar(va_arg(ap, int)));
+		return (ft_fputchar(va_arg(*ap, int)));
 	if (format == 'p')
-		return (ft_fputaddr(va_arg(ap, void *)));
+		return (ft_fputaddr(va_arg(*ap, void *)));
 	if (format == '%')
 		return (ft_fputchar('%'));
 	if (format == 'u')
-		return (ft_funsignednbr(va_arg(ap, int)));
-	return (ft_fputchar(va_arg(ap, int)));
+		return (ft_funsignednbr(va_arg(*ap, int)));
+	return (0);
 }
